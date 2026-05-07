@@ -2,6 +2,6 @@ FROM alpine:3.22
 
 WORKDIR /app
 
-COPY bench-exporter .
+COPY linux/amd64/bench-exporter .
 
 ENTRYPOINT ["./bench-exporter"]
