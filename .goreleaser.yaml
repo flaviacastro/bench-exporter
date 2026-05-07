@@ -1,32 +1,58 @@
-# This is an example .goreleaser.yml file with some sensible defaults.
-# Make sure to check the documentation at https://goreleaser.com
+version: 2
+
+project_name: bench-exporter
+
 before:
   hooks:
-    # You may remove this if you don't use go modules.
     - go mod tidy
-    # you may remove this if you don't need go generate
     - go generate ./...
+
 builds:
-  - env:
+  - binary: bench-exporter
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
       - darwin
+    goarch:
+      - amd64
+
 archives:
-  - replacements:
-      darwin: Darwin
-      linux: Linux
-      amd64: x86_64
+  - formats: [tar.gz]
+
 checksum:
   name_template: 'checksums.txt'
+
 snapshot:
-  name_template: "{{ incpatch .Version }}-next"
+  name_template: "{{ incpatch .Version }}"
+
 changelog:
   sort: asc
   filters:
     exclude:
       - '^docs:'
       - '^test:'
+
+dockers_v2:
+  - id: bench-exporter
+    ids:
+      - bench-exporter
+    tags:
+      - "{{ .Version }}"
+      - latest
+    images:
+      - "{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .Env.GITHUB_REPOSITORY }}"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY }}"
+    platforms:
+      - linux/amd64
+    sbom: false
+    flags:
+    - "--provenance=false"
+
+release:
+  github:
+    owner: "{{ .Env.GITHUB_REPOSITORY_OWNER }}"
+    name: "{{ .ProjectName }}"
 
 # modelines, feel free to remove those if you don't want/use them:
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
