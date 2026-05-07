@@ -23,8 +23,8 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 
-snapshot:
-  name_template: "{{ incpatch .Version }}"
+blobs:
+  - directory: dist
 
 changelog:
   sort: asc
