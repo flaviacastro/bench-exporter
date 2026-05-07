@@ -1,7 +1,10 @@
 FROM alpine:3.22
 
+ARG TARGETOS
+ARG TARGETARCH
+
 WORKDIR /app
 
-COPY linux/${TARGETARCH}/bench-exporter .
+COPY ${TARGETOS}/${TARGETARCH}/bench-exporter .
 
 ENTRYPOINT ["./bench-exporter"]
