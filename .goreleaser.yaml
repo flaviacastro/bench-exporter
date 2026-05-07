@@ -38,7 +38,6 @@ dockers_v2:
       - "{{ .Version }}"
       - latest
     images:
-      - "{{ .ProjectName }}"
       - "ghcr.io/{{ .Env.GITHUB_REPOSITORY }}"
     platforms:
       - linux/amd64
