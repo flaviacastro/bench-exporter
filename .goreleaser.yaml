@@ -23,9 +23,6 @@ archives:
 checksum:
   name_template: 'checksums.txt'
 
-blobs:
-  - directory: dist
-
 changelog:
   sort: asc
   filters:
